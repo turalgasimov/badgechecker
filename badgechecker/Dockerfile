@@ -24,7 +24,6 @@ apt-get update && apt-get install -y \
     libx11-xcb1 \
     libasound2
 
-
 FROM selenium/standalone-firefox:latest
 
 USER root
