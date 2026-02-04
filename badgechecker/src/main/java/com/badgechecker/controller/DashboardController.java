@@ -37,12 +37,10 @@ public class DashboardController {
         return "index";
     }
 
-    public class PingController {
-
-        @GetMapping("/ping")
-        public String ping() {
-            return "OK";
-        }
+    @GetMapping("/ping")
+    @ResponseBody
+    public String ping() {
+        return "OK";
     }
 
     private List<String> readCsv(MultipartFile file) throws Exception {
