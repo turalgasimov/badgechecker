@@ -1,0 +1,4 @@
+{
+  "java.project.sourcePaths": ["badgechecker/src", "src"],
+  "java.compile.nullAnalysis.mode": "automatic"
+}

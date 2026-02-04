@@ -1,7 +1,7 @@
 package com.badgechecker.controller;
 
 import com.badgechecker.model.UserBadgeReport;
-import com.badgechecker.service.CodecademyScraperService;
+import com.badgechecker.service.ScraperService;
 import com.badgechecker.service.CsvParserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class BadgeCheckerController {
     private CsvParserService csvParserService;
 
     @Autowired
-    private CodecademyScraperService scraperService;
+    private ScraperService scraperService;
 
     @GetMapping("/")
     public String index() {
