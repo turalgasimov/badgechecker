@@ -2,8 +2,10 @@ package com.badgechecker.service;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.*;
-import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.*;
@@ -16,14 +18,14 @@ public class BadgeCheckerService {
             List<String> badgeNames) {
 
         // ---- Minimal change: setup geckodriver automatically ----
-        WebDriverManager.firefoxdriver().setup();
+        WebDriverManager.chromedriver().setup();
 
-        FirefoxOptions options = new FirefoxOptions();
+        ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless"); // headless mode
         options.addArguments("--no-sandbox"); // required in containers
         options.addArguments("--disable-dev-shm-usage");// required in containers
 
-        WebDriver driver = new FirefoxDriver(options);
+        WebDriver driver = new ChromeDriver(options);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         List<UserResult> results = new ArrayList<>();
