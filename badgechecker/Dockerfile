@@ -15,6 +15,16 @@ RUN mvn clean package -DskipTests
 ####################################
 # STAGE 2 — RUNTIME (SELENIUM)
 ####################################
+
+apt-get update && apt-get install -y \
+    firefox-esr \
+    xvfb \
+    libgtk-3-0 \
+    libdbus-glib-1-2 \
+    libx11-xcb1 \
+    libasound2
+
+
 FROM selenium/standalone-firefox:latest
 
 USER root

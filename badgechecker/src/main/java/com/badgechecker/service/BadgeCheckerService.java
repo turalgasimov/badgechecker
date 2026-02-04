@@ -1,5 +1,6 @@
 package com.badgechecker.service;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.*;
 import org.openqa.selenium.support.ui.*;
@@ -14,10 +15,13 @@ public class BadgeCheckerService {
             List<String> usernames,
             List<String> badgeNames) {
 
+        // ---- Minimal change: setup geckodriver automatically ----
+        WebDriverManager.firefoxdriver().setup();
+
         FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("--headless");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--headless"); // headless mode
+        options.addArguments("--no-sandbox"); // required in containers
+        options.addArguments("--disable-dev-shm-usage");// required in containers
 
         WebDriver driver = new FirefoxDriver(options);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
