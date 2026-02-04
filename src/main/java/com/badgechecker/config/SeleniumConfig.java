@@ -15,7 +15,7 @@ public class SeleniumConfig {
     @Scope("prototype")
     public WebDriver webDriver() {
         // Setup ChromeDriver using WebDriverManager
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().browserInDocker().setup();
 
         ChromeOptions options = new ChromeOptions();
         

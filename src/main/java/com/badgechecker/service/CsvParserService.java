@@ -22,7 +22,7 @@ public class CsvParserService {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
              @SuppressWarnings("deprecation")
-             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT)) {
             
             for (CSVRecord record : csvParser) {
                 // Assumes column name is "username" or takes first column
@@ -44,7 +44,7 @@ public class CsvParserService {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
              @SuppressWarnings("deprecation")
-             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT)) {
             
             for (CSVRecord record : csvParser) {
                 // Assumes column name is "badge" or "badgename" or takes first column
