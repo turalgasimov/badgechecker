@@ -11,7 +11,6 @@ RUN mvn dependency:go-offline
 COPY badgechecker/src ./src
 RUN mvn clean package -DskipTests
 
-
 ####################################
 # STAGE 2 — RUNTIME (SELENIUM)
 ####################################
