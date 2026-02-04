@@ -25,26 +25,23 @@ public class DashboardController {
     public String run(
             @RequestParam("usernames") MultipartFile usernamesFile,
             @RequestParam("badges") MultipartFile badgesFile,
-            Model model
-    ) throws Exception {
+            Model model) throws Exception {
 
         List<String> usernames = readCsv(usernamesFile);
         List<String> badges = readCsv(badgesFile);
 
         model.addAttribute(
-            "results",
-            service.checkBadges(usernames, badges)
-        );
+                "results",
+                service.checkBadges(usernames, badges));
 
         return "index";
     }
 
     private List<String> readCsv(MultipartFile file) throws Exception {
         BufferedReader br = new BufferedReader(
-            new InputStreamReader(file.getInputStream())
-        );
+                new InputStreamReader(file.getInputStream()));
         return br.lines()
-            .filter(l -> !l.isBlank())
-            .collect(Collectors.toList());
+                .filter(l -> !l.isBlank())
+                .collect(Collectors.toList());
     }
 }
