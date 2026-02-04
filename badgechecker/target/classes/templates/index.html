@@ -28,6 +28,11 @@
 
 <hr>
 
+<div th:if="${error}" style="color:red">
+    <p th:text="${error}"></p>
+</div>
+
+
 <div th:if="${results}">
     <div th:each="user : ${results}" class="card">
         <h3 th:text="${user.username}"></h3>

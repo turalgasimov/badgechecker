@@ -1,4 +1,4 @@
-package com.badgechecker.controller;
+package ;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,16 +25,18 @@ public class DashboardController {
     public String run(
             @RequestParam("usernames") MultipartFile usernamesFile,
             @RequestParam("badges") MultipartFile badgesFile,
-            Model model) throws Exception {
+            Model model) {
 
-        List<String> usernames = readCsv(usernamesFile);
-        List<String> badges = readCsv(badgesFile);
+        try {
+            List<String> usernames = readCsv(usernamesFile);
+            List<String> badges = readCsv(badgesFile);
 
-        model.addAttribute(
-                "results",
-                service.checkBadges(usernames, badges));
-
-        return "index";
+            model.addAttribute("results", service.checkBadges(usernames, badges));
+            return "index";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "index";
+        }
     }
 
     @GetMapping("/ping")
@@ -44,10 +46,13 @@ public class DashboardController {
     }
 
     private List<String> readCsv(MultipartFile file) throws Exception {
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(file.getInputStream()));
-        return br.lines()
-                .filter(l -> !l.isBlank())
-                .collect(Collectors.toList());
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+            return br.lines()
+                    .filter(l -> !l.isBlank())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to read CSV: " + e.getMessage(), e);
+        }
     }
+
 }
