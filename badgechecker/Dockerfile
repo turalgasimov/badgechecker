@@ -1,35 +1,40 @@
-FROM eclipse-temurin:17-jdk
+####################################
+# STAGE 1 — BUILD WITH MAVEN
+####################################
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
-# Install dependencies
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+
+####################################
+# STAGE 2 — RUNTIME WITH FIREFOX
+####################################
+FROM eclipse-temurin:17-jre
+
+# Install Firefox + dependencies
 RUN apt-get update && apt-get install -y \
+    firefox-esr \
     wget \
-    curl \
-    gnupg \
     ca-certificates \
-    software-properties-common \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Firefox
-RUN add-apt-repository ppa:mozillateam/ppa \
-    && apt-get update \
-    && apt-get install -y firefox \
     && rm -rf /var/lib/apt/lists/*
 
 # Install GeckoDriver
-RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.36.0/geckodriver-v0.36.0-linux64.tar.gz \
-    && tar -xzf geckodriver-v0.36.0-linux64.tar.gz \
-    && mv geckodriver /usr/local/bin/ \
-    && chmod +x /usr/local/bin/geckodriver
-
-# Install Maven
-RUN wget https://downloads.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz \
-    && tar -xzf apache-maven-3.9.6-bin.tar.gz \
-    && mv apache-maven-3.9.6 /opt/maven \
-    && ln -s /opt/maven/bin/mvn /usr/bin/mvn
+RUN wget -O /tmp/geckodriver.tar.gz \
+    https://github.com/mozilla/geckodriver/releases/download/v0.34.0/geckodriver-v0.34.0-linux64.tar.gz \
+    && tar -xzf /tmp/geckodriver.tar.gz -C /usr/local/bin \
+    && chmod +x /usr/local/bin/geckodriver \
+    && rm /tmp/geckodriver.tar.gz
 
 WORKDIR /app
 
-COPY . .
-RUN mvn clean package -DskipTests
+COPY --from=builder /app/target/*.jar app.jar
 
-CMD ["java", "-jar", "target/*.jar"]
+ENV PORT=8080
+EXPOSE 8080
+
+CMD ["java", "-jar", "app.jar"]
