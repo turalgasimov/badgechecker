@@ -11,7 +11,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Runtime stage
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:25-jre
 
 # Install Chrome and dependencies for Selenium
 RUN apt-get update && apt-get install -y \

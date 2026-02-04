@@ -47,7 +47,7 @@ public class BadgeCheckerController {
             // Parse CSV files
             logger.info("Parsing usernames file...");
             List<String> usernames = csvParserService.parseUsernames(usernamesFile);
-            
+
             logger.info("Parsing badges file...");
             List<String> badgeNames = csvParserService.parseBadgeNames(badgesFile);
 

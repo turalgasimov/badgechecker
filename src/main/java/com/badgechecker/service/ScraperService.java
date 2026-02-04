@@ -21,7 +21,7 @@ import java.util.List;
 public class ScraperService {
 
     private static final Logger logger = LoggerFactory.getLogger(ScraperService.class);
-    private static final String BASE_URL = "https://www.codecademy.com/users/";
+    private static final String BASE_URL = "https://www.codecademy.com/profiles/";
     private static final int WAIT_TIMEOUT_SECONDS = 15;
 
     @Autowired
