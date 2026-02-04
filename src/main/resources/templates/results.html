@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge Check Results</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Badge Check Results</h1>
+        
+        <div class="results-container">
+            <div th:each="report : ${reports}" class="user-card">
+                <div class="card-header">
+                    <h2 th:text="${report.username}">Username</h2>
+                </div>
+                <div class="card-body">
+                    <div th:each="badge : ${report.badges}" class="badge-item">
+                        <span class="badge-name" th:text="${badge.badgeName}">Badge Name</span>
+                        <span th:if="${badge.completed}" class="status completed">✓ Completed</span>
+                        <span th:unless="${badge.completed}" class="status not-completed">✗ Not Completed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="back-button-container">
+            <a href="/" class="back-btn">← Check More Badges</a>
+        </div>
+    </div>
+</body>
+</html>

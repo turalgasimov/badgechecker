@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codecademy Badge Checker</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Codecademy Badge Checker</h1>
+        
+        <div class="info-box">
+            <h3>Instructions:</h3>
+            <ul>
+                <li>Upload a CSV file with usernames (header: <code>username</code>)</li>
+                <li>Upload a CSV file with badge names (header: <code>badge</code> or <code>badgename</code>)</li>
+                <li>Click "Check Badges" to see the results</li>
+            </ul>
+        </div>
+
+        <div th:if="${error}" class="error-box">
+            <p th:text="${error}"></p>
+        </div>
+
+        <form action="/check" method="post" enctype="multipart/form-data" class="upload-form">
+            <div class="form-group">
+                <label for="usernamesFile">Usernames CSV:</label>
+                <input type="file" id="usernamesFile" name="usernamesFile" accept=".csv" required>
+            </div>
+
+            <div class="form-group">
+                <label for="badgesFile">Badge Names CSV:</label>
+                <input type="file" id="badgesFile" name="badgesFile" accept=".csv" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Check Badges</button>
+        </form>
+    </div>
+</body>
+</html>
